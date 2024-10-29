@@ -1,4 +1,4 @@
-package ex1;
+package TP1.ex1;
 /*
  * Copyright (c) [2024] [AZZAM Mohamed ]
  * Tous droits réservés.
@@ -7,6 +7,8 @@ package ex1;
  *
  * Ce logiciel est un exemple de code Java et peut être utilisé pour des fins éducatives.
  */
+
+
 import java.util.Scanner;
 import java.util.Vector;
 
