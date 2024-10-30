@@ -33,18 +33,28 @@ public class BanqueAdminService {
     }
 
     public void listercompte() {
-        System.out.println("________ Liste des Clients et Comptes BANKATI _________");
+        System.out.println("===================================================");
+        System.out.println("         LISTE DES CLIENTS | BANKATI              ");
+        System.out.println("===================================================");
 
         for (Client client : banque.getClients()) {
-            System.out.println("Client : " + client); // Affiche les informations du client
+            System.out.println("Client : " + client.getNom().toUpperCase() + " " + client.getPrenom());
+            System.out.println("CIN : " + client.getCin() + " | Email : " + client.getEmail() + " | Téléphone : " + client.getTel());
 
-            // Liste les comptes associés au client
-            for (Compte compte : client.getComptes()) {
-                System.out.println("  - Compte : " + compte); // Affiche les informations du compte
+            if (client.getComptes() != null && client.getComptes().size() > 0) {
+                System.out.println("---------------------------------------------------");
+                for (Compte compte : client.getComptes()) {
+                    System.out.printf("\tMatricule : %-10s | Solde : %,.2f DH | Date de Création : %s%n",
+                            compte.getMatricule(), compte.getSolde(), compte.getDateDeCreation());
+                }
+                System.out.println("---------------------------------------------------");
+            } else {
+                System.out.println("\tAucun compte associé");
             }
+            System.out.println();
         }
 
-        System.out.println("___________________________________________");
+        System.out.println("===================================================");
     }
 
 }

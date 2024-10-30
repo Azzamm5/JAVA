@@ -17,7 +17,7 @@ public class Compte {
         this.solde = solde;
         this.operations = new ArrayList<>();
         this.proprietaire = proprietaire;
-        this.dateDeCreation = dateDeCreation;
+        this.dateDeCreation = LocalDateTime.now();
     }
 
     // Méthode pour générer un matricule unique
