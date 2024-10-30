@@ -15,7 +15,7 @@ public class Main {
         client1.getComptes().add(c1);
 
         BanqueAdminService b1 = new BanqueAdminService(Cih);
-        //b1.creercompte();
+        b1.creercompte();
 
 
 

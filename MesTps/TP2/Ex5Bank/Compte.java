@@ -1,18 +1,20 @@
 package MesTps.TP2.Ex5Bank;
 
 
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Compte {
-    private static int compteurMatricule = 1;
+    private static int compteurMatricule = 1980;
     private String matricule;
     private double solde;
     private ArrayList<Log> operations;
     private Client proprietaire;
     private LocalDateTime dateDeCreation;
 
-    public Compte(Client proprietaire,double solde) {
+    public Compte(Client proprietaire, double solde) {
         this.matricule = generateMatricule();
         this.solde = solde;
         this.operations = new ArrayList<>();
@@ -22,7 +24,7 @@ public class Compte {
 
     // Méthode pour générer un matricule unique
     private String generateMatricule() {
-        return "CIH-2024" + compteurMatricule++;
+        return "CIH-2024-" + compteurMatricule++;
     }
 
     // Getters
@@ -46,36 +48,18 @@ public class Compte {
         return dateDeCreation;
     }
 
-    // Setters
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
-
-    public void setSolde(double solde) {
-        this.solde = solde;
-    }
-
-    public void setOperations(ArrayList<Log> operations) {
-        this.operations = operations;
-    }
-
-    public void setProprietaire(Client proprietaire) {
-        this.proprietaire = proprietaire;
-    }
-
-    public void setDateDeCreation(LocalDateTime dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
-
-    // toString
+    // toString avec formatage de la date
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String dateFormattee = dateDeCreation.format(formatter);
+
         return "Compte{" +
                 "matricule='" + matricule + '\'' +
                 ", solde=" + solde +
                 ", operations=" + operations +
                 ", proprietaire=" + proprietaire +
-                ", dateDeCreation=" + dateDeCreation +
+                ", dateDeCreation=" + dateFormattee +
                 '}';
     }
 }
