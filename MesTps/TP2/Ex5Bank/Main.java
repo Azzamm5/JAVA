@@ -1,28 +1,89 @@
 package MesTps.TP2.Ex5Bank;
 
+import java.util.Scanner;
+
+
+
 public class Main {
+
+
+    static void MenuPrincipal() {
+        System.out.println("""
+                |======================================================|
+                |                   CIH BANQUE                         |
+                |======================================================|
+                | 1) - Administration                                  |
+                | 2) - Clients                                         |
+                | 3) - Quitter                                         |
+                |======================================================|
+                |- Entrer Votre Choix : 
+                """);
+    }
+    static void MenuAdmin(){
+        System.out.println("""
+                |======================================================|
+                |                   CIH BANQUE                         |
+                |======================================================|
+                |                                                      |
+                | - Welcome to Espace Admin ---------------------------|
+                |                                                      |
+                |              -----   MENU    -----                   |
+                | 1) - Creer Un Compte                                 |
+                | 2) - Lister Tous Les Comptes                         |
+                | 3) - Retour                                          |
+                |======================================================|
+                |- Entrer Votre Choix :
+                """);
+    }
+
+
+    static void MenuClient(){
+        System.out.println("""
+                |======================================================|
+                |                   CIH BANQUE                         |
+                |======================================================|
+                |                                                      |
+                | - Welcome to Espace Client --------------------------|
+                |                                                      |
+                |              -----   MENU    -----                   |
+                | 1) - Creer Un Compte                                 |
+                | 2) - Lister Tous Les Comptes                         |
+                | 3) - Retour                                          |
+                |======================================================|
+                |- Entrer Votre Choix :
+                """);
+    }
     public static void main(String[] args) {
-        Client client1 = new Client("Riyad","Maj","AL111","riyadmaj10@gmail.com","0652535301","M");
-        Client client2 = new Client("Mohamed","AZZAM","jsgxex","mohamed@gmail","827187893","M");
-
-        Banque Cih = new Banque("CIH","Rabat","0606060606");
-
-        Cih.getClients().add(client1);
-        Cih.getClients().add(client2);
-
-
-        Compte c1 = new Compte(client1,7000.90);
-        client1.getComptes().add(c1);
-
-        BanqueAdminService b1 = new BanqueAdminService(Cih);
-        b1.creercompte();
-
-
-
-        b1.listercompte();
-
-
-
+        Scanner sc = new Scanner(System.in);
+        int choix;
+        Banque banque = new Banque("CIH","LOT EL HASSANIA","398138921");
+        BanqueAdminService bnqadmin = new BanqueAdminService(banque);
+        do{
+            MenuPrincipal();
+            choix = sc.nextInt();
+            switch (choix){
+                case 1-> {
+                    MenuAdmin();
+                    int choixAdmin = sc.nextInt();
+                    switch (choixAdmin){
+                        case 1-> {
+                            bnqadmin.creercompte();
+                        }
+                        case 2-> {
+                            bnqadmin.listercompte();
+                        }
+                        case 3-> {}
+                    }
+                }
+                case 2-> {
+                    MenuClient();
+                }
+                case 3 -> {
+                    System.out.println("Sortie .........");
+                    System.exit(0);
+                }
+            }
+        }while (choix != 3);
 
     }
 }
