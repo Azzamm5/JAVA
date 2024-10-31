@@ -43,7 +43,7 @@ public class Log {
 
 
     // Constructeur
-    public Log(LocalDate date, String msg) {
+    public Log(LocalDate date, LocalTime now, TypeLog verssement, String msg) {
         this.date = date;
         this.message = msg;
     }

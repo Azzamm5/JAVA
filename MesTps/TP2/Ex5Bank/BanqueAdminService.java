@@ -1,8 +1,8 @@
 package MesTps.TP2.Ex5Bank;
 
+import java.security.SecureRandom;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.Random;
 
 public class BanqueAdminService {
     private Banque banque;
@@ -14,7 +14,7 @@ public class BanqueAdminService {
     // Méthode pour générer un mot de passe simple
     private String generatePassword(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder(length);
 
         for (int i = 0; i < length; i++) {
@@ -25,51 +25,43 @@ public class BanqueAdminService {
         return password.toString();
     }
 
-    public void creercompte() {
+    // Méthode utilitaire pour saisir une chaîne de caractères
+    private String saisirString(String message) {
         Scanner clavier = new Scanner(System.in);
+        System.out.print(message);
+        return clavier.nextLine().trim();
+    }
+
+    public void creercompte() {
         System.out.println("===================================================");
         System.out.println("               Creation Du Compte                  ");
         System.out.println("===================================================");
-        System.out.print("| - Nom : ");
-        String nom = clavier.nextLine();
-        System.out.println("===================================================");
-        System.out.print("| - Prenom : ");
-        String prenom = clavier.nextLine();
-        System.out.println("===================================================");
-        System.out.print("| - Adresse : ");
-        String adresse = clavier.nextLine();
-        System.out.println("===================================================");
-        System.out.print("| - CIN : ");
-        String cin = clavier.nextLine();
-        System.out.println("===================================================");
-        System.out.print("| - Telephone : ");
-        String telephone = clavier.nextLine();
-        System.out.println("===================================================");
-        System.out.print("| - Sex : ");
-        String sex = clavier.nextLine();
-        System.out.println("===================================================");
 
-        boolean clientExiste = false;
-        for (Client cl : banque.getClients()) {
-            if (cin.equals(cl.getCin())) {
-                clientExiste = true;
-                System.out.println("=======================================================");
-                System.out.println("- Client Deja inscrit dans votre Systeme BANKATI !!!!!!");
-                System.out.println("=======================================================");
-                break;
-            }
-        }
+        String nom = saisirString("| - Nom : ");
+        String prenom = saisirString("| - Prenom : ");
+        String adresse = saisirString("| - Adresse : ");
+        String cin = saisirString("| - CIN : ");
+        String telephone = saisirString("| - Telephone : ");
+        String sex = saisirString("| - Sex : ");
 
-        if (!clientExiste) {
-            String password = generatePassword(8);  // 8 caractères de long pour le mot de passe
+        // Vérifier si le client existe déjà
+        boolean clientExiste = banque.getClients().stream()
+                .anyMatch(client -> client.getCin().equals(cin));
 
-            Client client = new Client(nom, prenom, cin, adresse, telephone, sex,password);
+        if (clientExiste) {
+            System.out.println("=======================================================");
+            System.out.println("- Client déjà inscrit dans votre système BANKATI !!!!!!");
+            System.out.println("=======================================================");
+        } else {
+            String password = generatePassword(8);  // 8 caractères pour le mot de passe
+
+            Client client = new Client(nom, prenom, cin, adresse, telephone, sex, password);
             banque.getClients().add(client);
-            Compte c = new Compte(client, 0);
-            client.getComptes().add(c);
+            Compte compte = new Compte(client, 0);
+            client.getComptes().add(compte);
 
             System.out.println("=======================================================");
-            System.out.println("- Client " + nom + " Créé avec succès ");
+            System.out.println("- Client " + nom + " créé avec succès ");
             System.out.println("Mot de passe temporaire : " + password);
             System.out.println("=======================================================");
         }
@@ -83,14 +75,13 @@ public class BanqueAdminService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
         for (Client client : banque.getClients()) {
-            System.out.println("Client : " + client.getNom().toUpperCase() + " " + client.getPrenom()+" | ID : "+client.getId()+ " |");
+            System.out.println("Client : " + client.getNom().toUpperCase() + " " + client.getPrenom() + " | ID : " + client.getId() + " |");
             System.out.println("CIN : " + client.getCin() + " | Email : " + client.getEmail() + " | Téléphone : " + client.getTel());
 
-            if (client.getComptes() != null && client.getComptes().size() > 0) {
+            if (client.getComptes() != null && !client.getComptes().isEmpty()) {
                 System.out.println("---------------------------------------------------");
                 for (Compte compte : client.getComptes()) {
                     String dateFormattee = compte.getDateDeCreation().format(formatter);
-
                     System.out.printf("\tMatricule : %-10s | Solde : %,.2f DH | Date de Création : %s%n",
                             compte.getMatricule(), compte.getSolde(), dateFormattee);
                 }

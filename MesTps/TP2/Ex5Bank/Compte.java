@@ -43,6 +43,9 @@ public class Compte {
     public Client getProprietaire() {
         return proprietaire;
     }
+    public void setSolde(double solde) {
+        this.solde = solde;
+    }
 
     public LocalDateTime getDateDeCreation() {
         return dateDeCreation;
@@ -62,4 +65,6 @@ public class Compte {
                 ", dateDeCreation=" + dateFormattee +
                 '}';
     }
+
+
 }
