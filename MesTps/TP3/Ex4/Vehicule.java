@@ -1,4 +1,4 @@
 package MesTps.TP3.Ex4;
 
-public class Main {
+public class Vehicule {
 }
